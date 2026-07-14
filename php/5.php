@@ -75,6 +75,36 @@ switch($hari) {
         break;
 }
 
+function cekUmur (string $umur) {
+    return ($umur >= 17) ? "Sudah Memiliki KTP" : "Belum Memliki KTP";
+}
+function cekKelas(string $jurusan){
+    switch($jurusan) {
+        case "Desain";
+            echo "Desain Grafis";
+            break;
+        case "Junior Web Dev";
+            echo "Junior Web Dev";
+            break;
+        case "Cyber Security";
+            echo "Cyber Security";
+            break;
+        case "Bahasa Inggris";
+            echo "Bahasa Inggris";
+            break;
+        case "Teknik Komputer";
+            echo "Teknik Komputer";
+            break;
+        case "Perhotelan";
+            echo "Perhotelan";
+            break;
+        case "Data Scientist";
+            echo "Data Scientist";
+            break;
+        default;
+            return "Jurusan Tidak Terdaftar";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -127,48 +157,15 @@ switch($hari) {
         <tbody align="center">
             <?php foreach ($peserta as $index => $p){ ?>
                 <tr>
-                    <td style="background-color:;"><?=  $index + 1 ?></td>
-                    <td style="background-color:;"><?=  $p['nama']?></td>
-                    <td style="background-color:;"><?=  $p['umur']?></td>
-                    <td style="background-color:;"><?=  $p['tinggi']?></td>
+                    <td style="color:red;"><?=  $index + 1 ?></td>
+                    <td style="color:orange;"><?=  $p['nama']?></td>
+                    <td style="color:green;"><?=  $p['umur']?></td>
+                    <td style="color:blue;"><?=  $p['tinggi']?></td>
                     <td>
-                        <?php if($p['umur'] >= 17): ?>
-                            <span style="color: green; ">Sudah Memiliki KTP</span> 
-                        <?php else: ?>
-                            <span style="color: red; ">Belum Memiliki KTP</span> 
-                        <?php endif ?>
-                        <!-- Kondisi ringkas menggunakan Ternary -->
-                         <!-- <?php echo ($p['umur'] >= 17) ? 'Sudah Memiliki KTP' : 'Belum Memiliki KTP' ?> -->
-                         <!-- Hasil nya sama dengan kondisi if else, hanya saja code lebih ringkas -->
+                        <?php echo cekUmur($p['umur']);?>
                     </td>
                     <td>
-                        <?php
-                        switch($p['jurusan']) {
-                            case "Desain";
-                                echo "Desain Grafis";
-                                break;
-                            case "Junior Web Dev";
-                                echo "Junior Web Dev";
-                                break;
-                            case "Cyber Security";
-                                echo "Cyber Security";
-                                break;
-                            case "Bahasa Inggris";
-                                echo "Bahasa Inggris";
-                                break;
-                            case "Teknik Komputer";
-                                echo "Teknik Komputer";
-                                break;
-                            case "Perhotelan";
-                                echo "Perhotelan";
-                                break;
-                            case "Data Scientist";
-                                echo "Data Scientist";
-                                break;
-                            default;
-                                echo "Jurusan Tidak Terdaftar";
-                        }
-                        ?>
+                        <?php echo cekKelas($p['jurusan']);?>
                     </td>
                 </tr>
                 <?php }?>
@@ -176,3 +173,13 @@ switch($hari) {
     </table>
 </body>
 </html>
+
+<!-- Baris 165 -->
+<?php if($p['umur'] >= 17): ?>
+    <span style="color: green; ">Sudah Memiliki KTP</span> 
+<?php else: ?>
+    <span style="color: red; ">Belum Memiliki KTP</span> 
+<?php endif ?>
+    <!-- Kondisi ringkas menggunakan Ternary -->
+    <!-- <?php echo ($p['umur'] >= 17) ? 'Sudah Memiliki KTP' : 'Belum Memiliki KTP' ?> -->
+    <!-- Hasil nya sama dengan kondisi if else, hanya saja code lebih ringkas -->

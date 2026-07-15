@@ -1,7 +1,7 @@
 <!-- Array: Tipe data yang bisa menampung banyak nilai dan bisa di panggil satu-persatu data di dalam tampungan Array tersebut -->
 <!-- Array dapat menampung berbagai Tipe Data: String, Integer, Boolean -->
 
-<?php 
+<?php
 
 $kerangjangBuah = array("Apel", "Berry", "Jeruk", "Mangga", "Pisang");
 $kerangjangBuah = ["Apel", "Berry", "Jeruk", "Mangga", "Pisang"];
@@ -9,7 +9,8 @@ $kerangjangBuah = ["Apel", "Berry", "Jeruk", "Mangga", "Pisang"];
 echo $kerangjangBuah[0];
 echo "<br>";
 echo $kerangjangBuah[2];
-foreach($kerangjangBuah as $tempatBuah);
+foreach ($kerangjangBuah as $tempatBuah)
+    ;
 echo "<br>";
 
 // Array assosiative menggunakan string/kalimat sebagai index
@@ -44,11 +45,11 @@ $peserta = [
 
 echo "Nama Siswa: " . $siswa['nama'];
 echo "<br>";
-echo "peserta 1 :" . $peserta [0]['nama'];
+echo "peserta 1 :" . $peserta[0]['nama'];
 echo "<br>";
-echo "peserta 1 :" . $peserta [1]['nama'];
+echo "peserta 1 :" . $peserta[1]['nama'];
 
-foreach($peserta as $index => $value){
+foreach ($peserta as $index => $value) {
     echo "<br>";
     echo " Peserta ke-" . ($index + 1) . " : " . $value['nama'];
 }

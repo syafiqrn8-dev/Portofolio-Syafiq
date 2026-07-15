@@ -63,7 +63,7 @@ $peserta = [
 ];
 
 $hari = "Senin";
-switch($hari) {
+switch ($hari) {
     case "Senin";
         echo "Hari ini adalah hari Senin";
         break;
@@ -75,11 +75,13 @@ switch($hari) {
         break;
 }
 
-function cekUmur (string $umur) {
+function cekUmur(string $umur)
+{
     return ($umur >= 17) ? "Sudah Memiliki KTP" : "Belum Memliki KTP";
 }
-function cekKelas(string $jurusan){
-    switch($jurusan) {
+function cekKelas(string $jurusan)
+{
+    switch ($jurusan) {
         case "Desain";
             echo "Desain Grafis";
             break;
@@ -106,8 +108,10 @@ function cekKelas(string $jurusan){
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -120,7 +124,7 @@ function cekKelas(string $jurusan){
 
         th {
             background-color: darksalmon;
-            color:blanchedalmond;
+            color: blanchedalmond;
             border: 1px solid black;
             padding: 9px;
             text-align: center;
@@ -132,15 +136,18 @@ function cekKelas(string $jurusan){
             text-align: center;
         }
 
-        tbody tr:nth-child(even) { /* Genap */
-            background-color: #e7d3b885; 
+        tbody tr:nth-child(even) {
+            /* Genap */
+            background-color: #e7d3b885;
         }
-        
-        tbody tr:nth-child(odd) { /* Ganjil */
+
+        tbody tr:nth-child(odd) {
+            /* Ganjil */
             background-color: #f5f2d2;
         }
     </style>
 </head>
+
 <body>
     <h1>Belajar Table Data PHP</h1>
     <table border="1" align="center" cellspacing="0">
@@ -155,31 +162,32 @@ function cekKelas(string $jurusan){
             </tr>
         </thead>
         <tbody align="center">
-            <?php foreach ($peserta as $index => $p){ ?>
+            <?php foreach ($peserta as $index => $p) { ?>
                 <tr>
-                    <td style="color:red;"><?=  $index + 1 ?></td>
-                    <td style="color:orange;"><?=  $p['nama']?></td>
-                    <td style="color:green;"><?=  $p['umur']?></td>
-                    <td style="color:blue;"><?=  $p['tinggi']?></td>
+                    <td style="color:red;"><?= $index + 1 ?></td>
+                    <td style="color:orange;"><?= $p['nama'] ?></td>
+                    <td style="color:green;"><?= $p['umur'] ?></td>
+                    <td style="color:blue;"><?= $p['tinggi'] ?></td>
                     <td>
-                        <?php echo cekUmur($p['umur']);?>
+                        <?php echo cekUmur($p['umur']); ?>
                     </td>
                     <td>
-                        <?php echo cekKelas($p['jurusan']);?>
+                        <?php echo cekKelas($p['jurusan']); ?>
                     </td>
                 </tr>
-                <?php }?>
+            <?php } ?>
         </tbody>
     </table>
 </body>
+
 </html>
 
 <!-- Baris 165 -->
-<?php if($p['umur'] >= 17): ?>
-    <span style="color: green; ">Sudah Memiliki KTP</span> 
+<?php if ($p['umur'] >= 17): ?>
+    <span style="color: green; ">Sudah Memiliki KTP</span>
 <?php else: ?>
-    <span style="color: red; ">Belum Memiliki KTP</span> 
+    <span style="color: red; ">Belum Memiliki KTP</span>
 <?php endif ?>
-    <!-- Kondisi ringkas menggunakan Ternary -->
-    <!-- <?php echo ($p['umur'] >= 17) ? 'Sudah Memiliki KTP' : 'Belum Memiliki KTP' ?> -->
-    <!-- Hasil nya sama dengan kondisi if else, hanya saja code lebih ringkas -->
+<!-- Kondisi ringkas menggunakan Ternary -->
+<!-- <?php echo ($p['umur'] >= 17) ? 'Sudah Memiliki KTP' : 'Belum Memiliki KTP' ?> -->
+<!-- Hasil nya sama dengan kondisi if else, hanya saja code lebih ringkas -->

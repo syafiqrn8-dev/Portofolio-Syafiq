@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +13,8 @@
         }
 
         th {
-            background-color: #275700; /* Hijau gelap bawaan */
+            background-color: #275700;
+            /* Hijau gelap bawaan */
             color: #ffffff;
             border: 1px solid black;
             padding: 9px;
@@ -25,54 +27,66 @@
             text-align: center;
         }
 
-        tbody tr:nth-child(even) { /* Genap */
-            background-color: #e7d3b885; 
+        tbody tr:nth-child(even) {
+            /* Genap */
+            background-color: #e7d3b885;
         }
-        
-        tbody tr:nth-child(odd) { /* Ganjil */
+
+        tbody tr:nth-child(odd) {
+            /* Ganjil */
             background-color: #ced38a;
         }
 
         .btn-tambah-data {
             margin-right: 15px;
-            align-items: center;   /* Membuat ikon dan teks sejajar lurus secara vertikal */
-            gap: 6px;   
+            align-items: center;
+            /* Membuat ikon dan teks sejajar lurus secara vertikal */
+            gap: 6px;
             display: inline-flex;
             text-decoration: none;
-            background-color: #275700; /* Hijau gelap bawaan */
+            background-color: #275700;
+            /* Hijau gelap bawaan */
             color: #ffffff;
             border-radius: 4px;
             padding: 5px 10px;
             font-size: 12px;
             font-weight: 300;
             border: 1px solid #1e4200;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Efek dimensi halus */
-            transition: all 0.2s ease-in-out; /* Animasi transisi lebih lancar */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Efek dimensi halus */
+            transition: all 0.2s ease-in-out;
+            /* Animasi transisi lebih lancar */
         }
 
         .btn-tambah-data:hover {
-            background-color: #347300; /* Warna hijau sedikit lebih terang */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Bayangan lebih tebal saat di-hover */
-            transform: translateY(-1px); /* Tombol sedikit terangkat naik */
+            background-color: #347300;
+            /* Warna hijau sedikit lebih terang */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            /* Bayangan lebih tebal saat di-hover */
+            transform: translateY(-1px);
+            /* Tombol sedikit terangkat naik */
         }
 
         .btn-tambah-data:active {
             background-color: #1e4200;
-            transform: translateY(0); /* Tombol kembali ke posisi semula */
+            transform: translateY(0);
+            /* Tombol kembali ke posisi semula */
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .form-group {
             margin-bottom: 15px;
         }
+
         .text-information {
             color: #347300;
             text-decoration: none;
         }
-        
+
         /* Container Utama (Sudah disatukan & disesuaikan) */
         .form-container {
-            max-width: 500px; /* Ukuran ideal, tidak terlalu lebar/sempit */
+            max-width: 500px;
+            /* Ukuran ideal, tidak terlalu lebar/sempit */
             margin: 8px auto;
             background: #ffffff;
             border-radius: 12px;
@@ -81,7 +95,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        form.form-container:hover{
+        form.form-container:hover {
             border: 0.5px solid #4b556383;
         }
 
@@ -132,7 +146,8 @@
             font-size: 14px;
             border: 1px solid #cccccc;
             border-radius: 6px;
-            box-sizing: border-box; /* Memastikan padding tidak merusak lebar input */
+            box-sizing: border-box;
+            /* Memastikan padding tidak merusak lebar input */
             transition: border-color 0.2s, box-shadow 0.2s;
         }
 
@@ -146,10 +161,12 @@
         .form-group input:hover {
             background-color: #f0f8e5c0;
         }
+
         /* Kontainer Tombol Aksi */
         .form-actions {
             display: flex;
-            gap: 12px; /* Jarak antar tombol */
+            gap: 12px;
+            /* Jarak antar tombol */
             margin-top: 24px;
         }
 
@@ -195,9 +212,11 @@
 
         /* Container pembungkus judul */
         .table-header-section {
-            margin: 2rem 0 1.5rem 0; /* Jarak atas dan bawah area judul */
+            margin: 2rem 0 1.5rem 0;
+            /* Jarak atas dan bawah area judul */
             padding-bottom: 10px;
-            border-bottom: 2px solid #e5e7eb; /* Garis abu-abu tipis pembatas */
+            border-bottom: 2px solid #e5e7eb;
+            /* Garis abu-abu tipis pembatas */
             position: relative;
         }
 
@@ -206,37 +225,93 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 24px;
             font-weight: 700;
-            color: #1f2937; /* Warna abu-abu sangat gelap, lebih modern dari hitam pekat */
+            color: #1f2937;
+            /* Warna abu-abu sangat gelap, lebih modern dari hitam pekat */
             margin: 0;
-            letter-spacing: -0.5px; /* Merapatkan huruf sedikit agar terlihat premium */
+            letter-spacing: -0.5px;
+            /* Merapatkan huruf sedikit agar terlihat premium */
             position: relative;
             display: inline-block;
         }
 
+        /* Desain Tombol Edit (Biru Modern) */
+        .btn-edit {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #509e10;
+            /* Biru */
+            color: #ffffff !important;
+            /* Memaksa warna teks tetap putih */
+            padding: 2px 8px;
+            font-size: 10px;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
 
+        .btn-edit:hover {
+            background-color: #086403;
+            /* Biru lebih gelap saat disentuh */
+        }
 
+        /* Desain Tombol Delete (Merah Tegas) */
+        .btn-delete {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #d63636;
+            /* Merah */
+            color: #ffffff !important;
+            /* Memaksa warna teks tetap putih */
+            padding: 2px 8px;
+            font-size: 10px;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-delete:hover {
+            background-color: #7e0000;
+            /* Merah lebih gelap saat disentuh */
+        }
     </style>
 </head>
+
 <body>
-    <?php if(isset($_GET['tambah'])): ?>
+
+    <?php if (isset($_GET['tambah'])): ?>
+        <!-- Pembungkus untuk Halaman Tambah -->
         <div class="form-container">
             <div class="form-header">
                 <h1>Tambah Data Peserta</h1>
                 <p>Silakan isi formulir di bawah ini dengan data yang valid.</p>
             </div>
-        
             <div class="form-body">
                 <?php include 'form.php'; ?>
             </div>
         </div>
+
+    <?php elseif (isset($_GET['edit'])): ?>
+        <!-- Pembungkus untuk Halaman Edit -->
+        <div class="form-container">
+            <div class="form-header">
+                <h1>Edit Data Peserta</h1>
+                <p>Silakan isi formulir di bawah ini dengan data yang valid.</p>
+            </div>
+            <div class="form-body">
+                <?php include 'form.php'; ?>
+            </div>
+        </div>
+
     <?php else: ?>
+        <!-- Pembungkus untuk Halaman Utama/Tabel -->
         <div class="table-header-section">
             <h2 class="main-title">Data Peserta</h2>
         </div>
         <?php include 'table.php'; ?>
 
-    <?php endif ?>
-    
-    
+    <?php endif; ?>
+
+
 </body>
+
 </html>

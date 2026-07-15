@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 // bahasa pemrograman berbasis server-side scripting yang 
 // digunakan untuk pengembangan web dan dapat disisipkan ke dalam HTML.
@@ -30,9 +30,9 @@ echo $welcomeMessage . ", " . $aku;
 
 $umur = 18; //integer
 $tinggi = 169.5; //float
- echo "<br>";
- echo "Umur saya adalah " . $umur . " tahun";
- echo "<br>";
-  echo "Tinggi saya adalah " . $tinggi . "cm";
+echo "<br>";
+echo "Umur saya adalah " . $umur . " tahun";
+echo "<br>";
+echo "Tinggi saya adalah " . $tinggi . "cm";
 
 ?>

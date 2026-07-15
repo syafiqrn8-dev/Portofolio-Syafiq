@@ -1,6 +1,6 @@
 <!-- Looping di PHP -->
 
-<?php 
+<?php
 
 for ($i = 0; $i < 10; $i++) {
     echo "perulangan ke-$i <br>"; // Perulangan for

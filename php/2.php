@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Belajar PHP</title>
 </head>
+
 <body>
     <h1>BELAJAR PHP</h1>
     <?php
@@ -24,14 +26,15 @@
     <br>
 
     <?php
-    function myTestStatic() {
-    static $x = 1;
-    static $string = "TestFunction";
-    echo $x;
-    echo "<br>";
-    echo $string;
-    $x++;
-    $string = str_increment($string); // Menggantikan $x++
+    function myTestStatic()
+    {
+        static $x = 1;
+        static $string = "TestFunction";
+        echo $x;
+        echo "<br>";
+        echo $string;
+        $x++;
+        $string = str_increment($string); // Menggantikan $x++
     }
     echo "Ini Hasil kata kunci Statis";
     echo "<br>";
@@ -42,20 +45,23 @@
     myTestStatic();
     echo "<br>";
     echo "<br>";
-    ?> 
+    ?>
 
     <?php
     $x = 5;
     $y = 10;
 
-    function myTestGlobal() {
-    global $x, $y;
-    $y = $x + $y;
+    function myTestGlobal()
+    {
+        global $x, $y;
+        $y = $x + $y;
     }
 
     myTestGlobal();
-    echo "<p> Ini hasil kata kunci Global: " . $y; "</p>"; // outputs 15
+    echo "<p> Ini hasil kata kunci Global: " . $y;
+    "</p>"; // outputs 15
     ?>
 
 </body>
+
 </html>

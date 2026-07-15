@@ -40,6 +40,7 @@ $peserta = [
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,7 +53,7 @@ $peserta = [
 
         th {
             background-color: darksalmon;
-            color:blanchedalmond;
+            color: blanchedalmond;
             border: 1px solid black;
             padding: 9px;
             text-align: center;
@@ -64,15 +65,18 @@ $peserta = [
             text-align: center;
         }
 
-        tbody tr:nth-child(even) { /* Genap */
-            background-color: #e7d3b885; 
+        tbody tr:nth-child(even) {
+            /* Genap */
+            background-color: #e7d3b885;
         }
-        
-        tbody tr:nth-child(odd) { /* Ganjil */
+
+        tbody tr:nth-child(odd) {
+            /* Ganjil */
             background-color: #f5f2d2;
         }
     </style>
 </head>
+
 <body>
     <h1>Belajar Table Data PHP</h1>
     <table border="1" align="center" cellspacing="0">
@@ -85,15 +89,16 @@ $peserta = [
             </tr>
         </thead>
         <tbody align="center">
-            <?php foreach ($peserta as $index => $p){ ?>
+            <?php foreach ($peserta as $index => $p) { ?>
                 <tr>
-                    <td style="background-color:;"><?=  $index + 1 ?></td>
-                    <td style="background-color:;"><?=  $p['nama']?></td>
-                    <td style="background-color:;"><?=  $p['umur']?></td>
-                    <td style="background-color:;"><?=  $p['tinggi']?></td>
+                    <td style="background-color:;"><?= $index + 1 ?></td>
+                    <td style="background-color:;"><?= $p['nama'] ?></td>
+                    <td style="background-color:;"><?= $p['umur'] ?></td>
+                    <td style="background-color:;"><?= $p['tinggi'] ?></td>
                 </tr>
-                <?php }?>
+            <?php } ?>
         </tbody>
     </table>
 </body>
+
 </html>

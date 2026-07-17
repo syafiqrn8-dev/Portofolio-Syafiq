@@ -1,3 +1,29 @@
+<?php
+include 'koneksi/koneksi.php';
+
+// setting table
+$querySettings = mysqli_query($koneksi, "SELECT * FROM settings LIMIT 1");
+$rowSettings = mysqli_fetch_assoc($querySettings);
+
+if (isset($_POST['submit'])) {
+	// ambil data dari form dengan atribut name
+	$nama = $_POST['nama'];
+	$email = $_POST['email'];
+	$subject = $_POST['subject'];
+	$pesan = $_POST['pesan'];
+
+	// Insert
+	$insert = mysqli_query($koneksi, "INSERT INTO contacts (nama, email, subject, pesan) VALUES('$nama', '$email', '$subject', '$pesan')");
+
+
+	header("location:index.php");
+	// fetch_assoc() = mengambil data dari hasil query dan menghasilkan sebagai array asosiatif
+	// exit();
+
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,6 +75,7 @@
 			</div>
 		</div>
 	</nav>
+
 	<section id="home-section" class="hero">
 		<div class="home-slider  owl-carousel">
 			<div class="slider-item ">
@@ -625,22 +652,22 @@
 
 			<div class="row no-gutters block-9">
 				<div class="col-md-6 order-md-last d-flex">
-					<form action="#" class="bg-light p-4 p-md-5 contact-form">
+					<form action="#" method="post" class="bg-light p-4 p-md-5 contact-form">
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Your Name" required>
+							<input type="text" name="nama" class="form-control" placeholder="Your Name" required>
 						</div>
 						<div class="form-group">
-							<input type="email" class="form-control" placeholder="Your Email" required>
+							<input type="email" name="email" class="form-control" placeholder="Your Email" required>
 						</div>
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Subject" required>
+							<input type="text" name="subject" class="form-control" placeholder="Subject" required>
 						</div>
 						<div class="form-group">
-							<textarea name="" id="" cols="30" rows="7" class="form-control"
+							<textarea name="pesan" id="" cols="30" rows="7" class="form-control"
 								placeholder="Message"></textarea>
 						</div>
 						<div class="form-group">
-							<input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
+							<input type="submit" name="submit" value="Send Message" class="btn btn-primary py-3 px-5">
 						</div>
 					</form>
 
@@ -698,12 +725,12 @@
 						<h2 class="ftco-heading-2">Have a Questions?</h2>
 						<div class="block-23 mb-3">
 							<ul>
-								<li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain
-										View, San Francisco, California, USA</span></li>
-								<li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929
-											210</span></a></li>
+								<li><span class="icon icon-map-marker"></span><span
+										class="text"><?php echo $rowSettings['alamat'] ?></span></li>
+								<li><a href="#"><span class="icon icon-phone"></span><span
+											class="text"><?php echo $rowSettings['telp'] ?></span></a></li>
 								<li><a href="#"><span class="icon icon-envelope"></span><span
-											class="text">info@yourdomain.com</span></a></li>
+											class="text"><?php echo $rowSettings['email'] ?></span></a></li>
 							</ul>
 						</div>
 					</div>

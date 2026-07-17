@@ -1,8 +1,21 @@
-<?php session_start();
+<?php
+include '../koneksi/koneksi.php';
+
+// Hanya melihat data yang di kirim dari halaman depan (index paling depan di Portofolio)
+$query = mysqli_query($koneksi, "SELECT * FROM contacts ORDER BY id DESC");
+$rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
+
+// session_start();
 // Jika Sudah login, langsung ke halaman Login
-if (isset($_SESSION['nama'])) {
-    header("location: login.php");
-    exit;
+// if (isset($_SESSION['nama'])) {
+//     header("location: login.php");
+//     exit;
+// }
+
+if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+    $query = mysqli_query($koneksi, "DELETE FROM contacts WHERE id='$id'");
+    header('location:kontak.php');
 }
 ?>
 
@@ -19,9 +32,9 @@ if (isset($_SESSION['nama'])) {
 
     <title>Dashboard - Web Syafiq</title>
 
-    <!-- Custom fonts for this template-->
+    <!-- Custom fonts -->
     <?php include '_inc/css.php'; ?>
-    <!-- Custom styles for this template-->
+    <!-- Custom styles -->
 
 
 </head>
@@ -54,6 +67,46 @@ if (isset($_SESSION['nama'])) {
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
                         <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card shadow">
+                                <div class="card-header">
+                                    <h6 class="m-0 font-weight-bold text-primary">Kontak Kami</h6>
+                                </div>
+                                <div class="card body">
+                                    <table class="table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="p-2">No</th>
+                                                <th class="p-2">Nama</th>
+                                                <th class="p-2">Email</th>
+                                                <th class="p-2">Subject</th>
+                                                <th class="p-2">Pesan</th>
+                                                <th class="p-2">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($rows as $index => $row) { ?>
+                                                <tr>
+                                                    <td class="p-2"><?php echo $index + 1 ?></td>
+                                                    <td class="p-2"><?php echo $row['nama'] ?></td>
+                                                    <td class="p-2"><?php echo $row['email'] ?></td>
+                                                    <td class="p-2"><?php echo $row['subject'] ?></td>
+                                                    <td class="p-2"><?php echo $row['pesan'] ?></td>
+                                                    <td class="p-2">
+                                                        <a onclick="return confirm('apakah kamu yakin akan menghapus data ini?')"
+                                                            href="kontak.php?delete=<?php echo $row['id'] ?>"
+                                                            class="btn btn-danger btn-delete btn-sm">Hapus</a>
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Content Row -->

@@ -1,4 +1,6 @@
 <?php
+
+/** @var mysqli $koneksi */
 $servername = "localhost";
 $_username = "root";
 $_password = "";

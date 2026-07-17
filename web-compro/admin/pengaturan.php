@@ -1,9 +1,34 @@
-<?php session_start();
-// Jika Sudah login, langsung ke halaman Login
-if (isset($_SESSION['nama'])) {
-    header("location: login.php");
-    exit;
+<?php
+include '../koneksi/koneksi.php';
+
+// Hanya melihat data yang di kirim dari halaman depan (index paling depan di Portofolio)
+$query = mysqli_query($koneksi, "SELECT * FROM settings ORDER BY id DESC");
+$rows = mysqli_fetch_assoc($query);
+
+
+if (isset($_POST['simpan'])) {
+    $email = $_POST['email'];
+    $telp = $_POST['telp'];
+    $alamat = $_POST['alamat'];
+    $deskripsi = $_POST['deskripsi'];
+
+    // Apakah ada id terbaru di dalam table settings
+    $query = mysqli_query($koneksi, "SELECT id FROM settings LIMIT 1");
+
+    // num_rows : total data di dalam table
+    if (mysqli_num_rows($query) > 0) {
+        // Update
+        $data = mysqli_fetch_assoc($query);
+        $id = $data['id'];
+        $update = mysqli_query($koneksi, "UPDATE settings SET email='$email', telp='$telp', alamat='$alamat', deskripsi='$deskripsi' WHERE id= '$id'");
+    } else {
+        //Insert
+        $insert = mysqli_query($koneksi, "INSERT INTO settings (email, telp, alamat, deskripsi) VALUES ('$email', '$telp', '$alamat', '$deskripsi')");
+    }
+
+    header("location: pengaturan.php");
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -51,9 +76,54 @@ if (isset($_SESSION['nama'])) {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Pengaturan Umum</h1>
                         <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Kontak Kami</h6>
+                                </div>
+                                <div class="card body p-4">
+                                    <form action="" method="post">
+                                        <div class="mb-3 p-3">
+                                            <label for="" class="form-label ">
+                                                Logo
+                                            </label>
+                                            <input class="form-control" type="file" name="logo">
+                                        </div>
+                                        <div class="mb-3 p-3">
+                                            <label for="" class="form-label">Email</label>
+                                            <input class="form-control" type="email" name="email"
+                                                placeholder="ex: email@gmail.com"
+                                                value="<?php echo isset($rows['email']) ? $rows['email'] : '' ?>">
+                                        </div>
+                                        <div class="mb-3 p-3">
+                                            <label for="" class="form-label">Telp</label>
+                                            <input class="form-control" type="number" name="telp"
+                                                placeholder="Masukkan no telp anda"
+                                                value="<?php echo isset($rows['telp']) ? $rows['telp'] : '' ?>">
+                                        </div>
+                                        <div class="mb-3 p-3">
+                                            <label for="" class="form-label">Alamat</label>
+                                            <textarea name="alamat" id=""
+                                                class="form-control"><?php echo isset($rows['alamat']) ? $rows['alamat'] : '' ?></textarea>
+                                        </div>
+                                        <div class="mb-3 p-3">
+                                            <label for="" class="form-label">Deskripsi</label>
+                                            <textarea name="deskripsi" id=""
+                                                class="form-control"><?php echo isset($rows['deskripsi']) ? $rows['deskripsi'] : '' ?></textarea>
+                                        </div>
+                                        <div class="mb-3 p-3 mt-4">
+                                            <button class="btn btn-primary" type="submit" name="simpan">Simpan</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Content Row -->
@@ -358,7 +428,7 @@ if (isset($_SESSION['nama'])) {
                             </div> -->
 
                     <!-- Approach -->
-                    <!-- <div class="card shadow mb-4">
+                    <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
                         </div>
@@ -369,7 +439,7 @@ if (isset($_SESSION['nama'])) {
                             <p class="mb-0">Before working with this theme, you should become familiar with the
                                 Bootstrap framework, especially the utility classes.</p>
                         </div>
-                    </div> -->
+                    </div>
 
                 </div>
             </div>

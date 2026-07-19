@@ -6,8 +6,14 @@ if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $pwd = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $nama = $fnama . " " . $lnama;
-    $insert = mysqli_query($koneksi, "INSERT INTO users(nama_lengkap, email, passwords) VALUES ('$nama', '$email', '$pwd')");
-    header("location: login.php");
+    $query = "SELECT * FROM user WHERE email = '$email'";
+    $result = mysqli_query($koneksi,$query);
+        if(mysqli_num_rows($result) == 1) {
+        header("location:register.php?pesan=email_sudah_dipakai");
+    } else {
+        $insert = mysqli_query($koneksi,"INSERT INTO user(nama, email, passwords) VALUES ('$nama','$email','$pwd')");
+        header("location:login.php?pesan=berhasil");
+    }
 }
 
 ?>

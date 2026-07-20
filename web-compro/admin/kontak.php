@@ -69,42 +69,69 @@ if (isset($_GET['delete'])) {
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
                     </div>
 
-                    <div class="row">
+                    <div class="row my-4">
                         <div class="col-lg-12">
-                            <div class="card shadow">
-                                <div class="card-header">
-                                    <h6 class="m-0 font-weight-bold text-primary">Kontak Kami</h6>
+                            <div class="card shadow-sm border-0 rounded-lg">
+
+                                <!-- Card Header -->
+                                <div class="card-header bg-primary text-white py-3">
+                                    <h6 class="m-0 font-weight-bold">Pesan Kontak Kami</h6>
                                 </div>
-                                <div class="card body">
-                                    <table class="table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th class="p-2">No</th>
-                                                <th class="p-2">Nama</th>
-                                                <th class="p-2">Email</th>
-                                                <th class="p-2">Subject</th>
-                                                <th class="p-2">Pesan</th>
-                                                <th class="p-2">Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($rows as $index => $row) { ?>
+
+                                <!-- Card Body -->
+                                <div class="card-body p-4">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover align-middle mb-0">
+                                            <thead class="table-light text-center">
                                                 <tr>
-                                                    <td class="p-2"><?php echo $index + 1 ?></td>
-                                                    <td class="p-2"><?php echo $row['nama'] ?></td>
-                                                    <td class="p-2"><?php echo $row['email'] ?></td>
-                                                    <td class="p-2"><?php echo $row['subject'] ?></td>
-                                                    <td class="p-2"><?php echo $row['pesan'] ?></td>
-                                                    <td class="p-2">
-                                                        <a onclick="return confirm('apakah kamu yakin akan menghapus data ini?')"
-                                                            href="kontak.php?delete=<?php echo $row['id'] ?>"
-                                                            class="btn btn-danger btn-delete btn-sm">Hapus</a>
-                                                    </td>
+                                                    <th class="py-3" style="width: 50px;">No</th>
+                                                    <th class="py-3" style="min-width: 150px;">Nama</th>
+                                                    <th class="py-3" style="min-width: 180px;">Email</th>
+                                                    <th class="py-3" style="min-width: 150px;">Subject</th>
+                                                    <th class="py-3" style="min-width: 250px;">Pesan</th>
+                                                    <th class="py-3" style="width: 100px;">Aksi</th>
                                                 </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                <?php if (!empty($rows)) { ?>
+                                                    <?php foreach ($rows as $index => $row) { ?>
+                                                        <tr>
+                                                            <td class="text-center fw-bold"><?php echo $index + 1; ?></td>
+                                                            <td><?php echo htmlspecialchars($row['nama']); ?></td>
+                                                            <td>
+                                                                <a href="mailto:<?php echo htmlspecialchars($row['email']); ?>"
+                                                                    class="text-decoration-none">
+                                                                    <?php echo htmlspecialchars($row['email']); ?>
+                                                                </a>
+                                                            </td>
+                                                            <td class="fw-bold"><?php echo htmlspecialchars($row['subject']); ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php
+                                                                $pesan = htmlspecialchars($row['pesan']);
+                                                                echo (strlen($pesan) > 60) ? substr($pesan, 0, 60) . '...' : $pesan;
+                                                                ?>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <a onclick="return confirm('Apakah kamu yakin akan menghapus pesan ini?')"
+                                                                    href="kontak.php?delete=<?php echo $row['id']; ?>"
+                                                                    class="btn btn-danger btn-sm">
+                                                                    <i class="fas fa-trash"></i> Hapus
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    <?php } ?>
+                                                <?php } else { ?>
+                                                    <tr>
+                                                        <td colspan="6" class="text-center py-4 text-muted">Belum ada pesan
+                                                            masuk.</td>
+                                                    </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>

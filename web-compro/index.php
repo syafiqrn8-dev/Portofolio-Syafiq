@@ -618,7 +618,7 @@ if (isset($_POST['submit'])) {
 							<span class="icon-map-signs"></span>
 						</div>
 						<h3 class="mb-4">Address</h3>
-						<p>198 West 21th Street, Suite 721 New York NY 10016</p>
+						<p><?php echo $rowSettings['alamat'] ?></p>
 					</div>
 				</div>
 				<div class="col-md-6 col-lg-3 d-flex ftco-animate">
@@ -627,7 +627,7 @@ if (isset($_POST['submit'])) {
 							<span class="icon-phone2"></span>
 						</div>
 						<h3 class="mb-4">Contact Number</h3>
-						<p><a href="tel://1234567920">+ 1235 2355 98</a></p>
+						<p><a href="tel://1234567920">+ <?php echo $rowSettings['telp'] ?></a></p>
 					</div>
 				</div>
 				<div class="col-md-6 col-lg-3 d-flex ftco-animate">
@@ -636,7 +636,7 @@ if (isset($_POST['submit'])) {
 							<span class="icon-paper-plane"></span>
 						</div>
 						<h3 class="mb-4">Email Address</h3>
-						<p><a href="mailto:info@yoursite.com">info@yoursite.com</a></p>
+						<p><a href="mailto:info@yoursite.com"><?php echo $rowSettings['email'] ?></a></p>
 					</div>
 				</div>
 				<div class="col-md-6 col-lg-3 d-flex ftco-animate">
@@ -687,8 +687,7 @@ if (isset($_POST['submit'])) {
 				<div class="col-md">
 					<div class="ftco-footer-widget mb-4">
 						<h2 class="ftco-heading-2">About</h2>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-							there live the blind texts.</p>
+						<p><?php echo $rowSettings['deskripsi'] ?></p>
 						<ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
 							<li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
 							<li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>

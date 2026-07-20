@@ -7,11 +7,11 @@ if (isset($_POST['submit'])) {
     $pwd = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $nama = $fnama . " " . $lnama;
     $query = "SELECT * FROM user WHERE email = '$email'";
-    $result = mysqli_query($koneksi,$query);
-        if(mysqli_num_rows($result) == 1) {
+    $result = mysqli_query($koneksi, $query);
+    if (mysqli_num_rows($result) == 1) {
         header("location:register.php?pesan=email_sudah_dipakai");
     } else {
-        $insert = mysqli_query($koneksi,"INSERT INTO user(nama, email, passwords) VALUES ('$nama','$email','$pwd')");
+        $insert = mysqli_query($koneksi, "INSERT INTO user(nama, email, passwords) VALUES ('$nama','$email','$pwd')");
         header("location:login.php?pesan=berhasil");
     }
 }

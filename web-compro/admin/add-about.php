@@ -2,33 +2,68 @@
 include '../koneksi/koneksi.php';
 
 // Hanya melihat data yang di kirim dari halaman depan (index paling depan di Portofolio)
-$query = mysqli_query($koneksi, "SELECT * FROM settings ORDER BY id DESC");
-$rows = mysqli_fetch_assoc($query);
+$query = mysqli_query($koneksi, "SELECT * FROM abouts ORDER BY id DESC");
+$rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
+// session_start();
+// Jika Sudah login, langsung ke halaman Login
+// if (isset($_SESSION['nama'])) {
+//     header("location: login.php");
+//     exit;
+// }
 
-if (isset($_POST['simpan'])) {
-    $email = $_POST['email'];
-    $telp = $_POST['telp'];
-    $alamat = $_POST['alamat'];
-    $deskripsi = $_POST['deskripsi'];
-
-    // Apakah ada id terbaru di dalam table settings
-    $query = mysqli_query($koneksi, "SELECT id FROM settings LIMIT 1");
-
-    // num_rows : total data di dalam table
-    if (mysqli_num_rows($query) > 0) {
-        // Update
-        $data = mysqli_fetch_assoc($query);
-        $id = $data['id'];
-        $update = mysqli_query($koneksi, "UPDATE settings SET email='$email', telp='$telp', alamat='$alamat', deskripsi='$deskripsi' WHERE id= '$id'");
-    } else {
-        //Insert
-        $insert = mysqli_query($koneksi, "INSERT INTO settings (email, telp, alamat, deskripsi) VALUES ('$email', '$telp', '$alamat', '$deskripsi')");
-    }
-
-    header("location: pengaturan.php");
+if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+    $query = mysqli_query($koneksi, "DELETE FROM abouts WHERE id='$id'");
+    header('location:about.php');
 }
 
+if (isset($_POST['simpan'])) {
+    $nama = $_POST['nama'];
+    $email = $_POST['email'];
+    $telp = $_POST['telp'];
+    $tanggal_lahir = $_POST['tanggal_lahir'];
+    $deskripsi = $_POST['deskripsi'];
+    $alamat = $_POST['alamat'];
+    $kode_pos = $_POST['kode_pos'];
+
+    //Upload File
+    // $FILES: get value data dari inputan type 'file'
+    $file = "";
+    if (isset($_FILES['file'])) {
+        $namaFile = $_FILES['file']['name'];
+        $tmpFile = $_FILES['file']['tmp_name'];
+        $sizeFile = $_FILES['file']['size'];
+        $error = $_FILES['file']['error'];
+
+        if ($sizeFile > 2 * 1024 * 1024) {
+            exit('Ukuran file lebih dari 2MB');
+        }
+
+        $extensionValid = ['pdf', 'png', 'jpg', 'jpeg'];
+        $extension = strtolower(pathinfo($namaFile, PATHINFO_EXTENSION));
+
+        //IN ARRAY
+        if (!in_array($extension, $extensionValid)) {
+            exit('Extensi tidak valid!');
+        }
+        $namaFileBaru = uniqid() . "-" . time() . "." . $extension;
+        $pathUpload = "uploads";
+
+        // Buat folder uploads secara otomatis jika belum ada
+        if (!is_dir($pathUpload)) {
+            mkdir($pathUpload, 0777, true);
+        }
+
+        // move_uploaded_file()
+        if (!move_uploaded_file($tmpFile, $pathUpload . "/" . $namaFileBaru)) {
+            exit('Gambar gagal terupload');
+        }
+        $file = $namaFileBaru;
+    }
+    $insert = mysqli_query($koneksi, "INSERT INTO abouts (nama, email, telp, tanggal_lahir, deskripsi, alamat, kode_pos, file) VALUES('$nama', '$email', '$telp', '$tanggal_lahir', '$deskripsi', '$alamat', '$kode_pos', '$file')");
+    header('location:about.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -44,9 +79,9 @@ if (isset($_POST['simpan'])) {
 
     <title>Dashboard - Web Syafiq</title>
 
-    <!-- Custom fonts for this template-->
+    <!-- Custom fonts -->
     <?php include '_inc/css.php'; ?>
-    <!-- Custom styles for this template-->
+    <!-- Custom styles -->
 
 
 </head>
@@ -76,76 +111,75 @@ if (isset($_POST['simpan'])) {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Pengaturan Umum</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
                         <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
                     </div>
 
-                    <div class="row justify-content-center my-4">
+                    <div class="row">
                         <div class="col-lg-12">
-                            <div class="card shadow-sm border-0 rounded-lg">
-
-                                <!-- Card Header -->
-                                <div class="card-header bg-primary text-white py-3">
-                                    <h6 class="m-0 font-weight-bold">Pengaturan Umum / Kontak Kami</h6>
+                            <div class="card shadow">
+                                <div class="card-header">
+                                    <h6 class="m-0 font-weight-bold text-primary ">Tentang Kami</h6>
                                 </div>
-
-                                <!-- Card Body -->
-                                <div class="card-body p-4 p-md-5">
-                                    <!-- Ditambahkan enctype agar upload file logo berfungsi -->
-                                    <form action="" method="post" enctype="multipart/form-data">
-                                        <div class="row g-3">
-
-                                            <!-- Upload Logo (Full Width) -->
-                                            <div class="col-12 mb-3">
-                                                <label for="logo" class="form-label font-weight-bold">Logo
-                                                    Website</label>
-                                                <input class="form-control" type="file" id="logo" name="logo">
+                                <div class="card-body">
+                                    <form action="" method="post" class="p-4" enctype="multipart/form-data">
+                                        <div class="mb-3">
+                                            <label for="">Nama</label>
+                                            <input type="text" class="form-control" name="nama"
+                                                placeholder="Masukkan nama anda..">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="">Email</label>
+                                            <input type="email" class="form-control" name="email"
+                                                placeholder="Masukkan email anda..">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="">Telp</label>
+                                            <input type="tel" class="form-control" name="telp"
+                                                placeholder="Masukkan no telp anda..">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="">Tanggal Lahir</label>
+                                            <input type="date" class="form-control" name="tanggal_lahir"
+                                                placeholder="Masukkan tanggal lahir anda..">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="">Deskripsi</label>
+                                            <textarea type="text" class="form-control" name="deskripsi"
+                                                placeholder="Masukkan deskripsi anda.."></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="row">
+                                                <div class="col-lg-8">
+                                                    <div class="mb-3">
+                                                        <label for="">Alamat</label>
+                                                        <textarea type="text" class="form-control" name="alamat"
+                                                            placeholder="Masukkan alamat anda.."></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label for="">Kode Pos</label>
+                                                        <input type="number" class="form-control" name="kode_pos"
+                                                            placeholder="Masukkan kode pos anda..">
+                                                    </div>
+                                                </div>
                                             </div>
-
-                                            <!-- Email & Telp (2 Kolom Sejajar) -->
-                                            <div class="col-md-6 mb-3">
-                                                <label for="email" class="form-label font-weight-bold">Email</label>
-                                                <input class="form-control" type="email" id="email" name="email"
-                                                    placeholder="ex: email@gmail.com"
-                                                    value="<?php echo isset($rows['email']) ? htmlspecialchars($rows['email']) : '' ?>">
-                                            </div>
-
-                                            <div class="col-md-6 mb-3">
-                                                <label for="telp" class="form-label font-weight-bold">No. Telepon /
-                                                    WA</label>
-                                                <input class="form-control" type="text" id="telp" name="telp"
-                                                    placeholder="Masukkan no telp anda"
-                                                    value="<?php echo isset($rows['telp']) ? htmlspecialchars($rows['telp']) : '' ?>">
-                                            </div>
-
-                                            <!-- Alamat (Full Width) -->
-                                            <div class="col-12 mb-3">
-                                                <label for="alamat" class="form-label font-weight-bold">Alamat</label>
-                                                <textarea name="alamat" id="alamat" class="form-control" rows="3"
-                                                    placeholder="Masukkan alamat lengkap..."><?php echo isset($rows['alamat']) ? htmlspecialchars($rows['alamat']) : '' ?></textarea>
-                                            </div>
-
-                                            <!-- Deskripsi (Full Width) -->
-                                            <div class="col-12 mb-4">
-                                                <label for="deskripsi"
-                                                    class="form-label font-weight-bold">Deskripsi</label>
-                                                <textarea name="deskripsi" id="deskripsi" class="form-control" rows="3"
-                                                    placeholder="Masukkan deskripsi singkat..."><?php echo isset($rows['deskripsi']) ? htmlspecialchars($rows['deskripsi']) : '' ?></textarea>
-                                            </div>
-
-                                            <!-- Tombol Simpan -->
-                                            <div class="col-12">
-                                                <button class="btn btn-primary px-4 py-2 font-weight-bold" type="submit"
-                                                    name="simpan">
-                                                    Simpan Perubahan
-                                                </button>
-                                            </div>
-
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="">File</label>
+                                            <input type="file" class="form-control" name="file"
+                                                placeholder="Masukkan file anda..">
+                                        </div>
+                                        <div class="mb-3">
+                                            <button
+                                                onclick="return confirm('apakah kamu yakin akan menyimpan data ini?')"
+                                                type="submit" name="simpan" class="btn btn-primary">Simpan</button>
+                                            <a href="about.php" class="text-decoration">Kembali</a>
                                         </div>
                                     </form>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -452,7 +486,7 @@ if (isset($_POST['simpan'])) {
                             </div> -->
 
                     <!-- Approach -->
-                    <div class="card shadow mb-4">
+                    <!-- <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
                         </div>
@@ -463,7 +497,7 @@ if (isset($_POST['simpan'])) {
                             <p class="mb-0">Before working with this theme, you should become familiar with the
                                 Bootstrap framework, especially the utility classes.</p>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>

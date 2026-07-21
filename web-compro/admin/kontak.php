@@ -495,6 +495,32 @@ if (isset($_GET['delete'])) {
         </div>
     </div>
 
+    <!-- Update -->
+    <?php if (isset($rows)) {
+        foreach ($rows as $index => $row) { ?>
+            <div class="modal fade" id="editpart<?= $row['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Update data <?= $row['id'] ?></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php }
+    } ?>
+
     <!-- Bootstrap core JavaScript-->
     <?php include '_inc/js.php'; ?>
 

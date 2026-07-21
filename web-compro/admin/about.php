@@ -5,6 +5,69 @@ include '../koneksi/koneksi.php';
 $query = mysqli_query($koneksi, "SELECT * FROM abouts ORDER BY id DESC");
 $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
+if (isset($_GET['hapus'])) {
+    $id = $_GET['hapus'];
+    $query1 = mysqli_query($koneksi, "SELECT * FROM abouts WHERE id='$id'");
+    $row = mysqli_fetch_assoc($query1);
+    $file_lama = $row['file'];
+    $query = mysqli_query($koneksi, "DELETE FROM abouts WHERE id = '$id'");
+    if (file_exists("uploads/" . $file_lama)) {
+        unlink("uploads/" . $file_lama);
+    }
+    header('location: about.php');
+
+} else if (isset($_POST['submit'])) {
+    $id = $_POST['id'];
+    $nama = $_POST['nama'];
+    $email = $_POST['email'];
+    $telp = $_POST['telp'];
+    $tanggal_lahir = $_POST['tanggal_lahir'];
+    $alamat = $_POST['alamat'];
+    $kode_pos = $_POST['kode_pos'];
+    $deskripsi = $_POST['deskripsi'];
+    // $status = $_POST['status'];
+    $file_lama = $_POST['file_lama'];
+    // Get value dari input: type menggunakan $_FILES
+    $file = "";
+
+    if (isset($_FILES['file'])) {
+        $namaFile = $_FILES['file']['name'];
+        $tmpFile = $_FILES['file']['tmp_name'];
+        $sizeFile = $_FILES['file']['size'];
+        $error = $_FILES['file']['error'];
+
+        if ($sizeFile > 2 * 1024 * 1024) {
+            exit('Ukuran file lebih dari 2MB');
+        }
+
+        $extensionValid = ['pdf', 'png', 'jpg', 'jpeg'];
+        $extension = strtolower(pathinfo($namaFile, PATHINFO_EXTENSION));
+
+        //IN ARRAY
+        if (!in_array($extension, $extensionValid)) {
+            exit('Extensi tidak valid!');
+        }
+        $namaFileBaru = uniqid() . "-" . time() . "." . $extension;
+        $pathUpload = "uploads";
+
+        // Buat folder uploads secara otomatis jika belum ada
+        if (!is_dir($pathUpload)) {
+            mkdir($pathUpload, 0777, true);
+        }
+
+        // move_uploaded_file()
+        if (!move_uploaded_file($tmpFile, $pathUpload . "/" . $namaFileBaru)) {
+            exit('Gambar gagal terupload');
+        }
+        $file = $namaFileBaru;
+    }
+    $update = mysqli_query($koneksi, "UPDATE abouts SET nama = '$nama', email = '$email', telp = '$telp', tanggal_lahir = '$tanggal_lahir', alamat = '$alamat', kode_pos = '$kode_pos', file = '$file', deskripsi = '$deskripsi' WHERE id = '$id' ");
+    if (file_exists("uploads/" . $file_lama)) {
+        unlink("uploads/" . $file_lama);
+    }
+    header('location: about.php');
+}
+
 // session_start();
 // Jika Sudah login, langsung ke halaman Login
 // if (isset($_SESSION['nama'])) {
@@ -142,11 +205,12 @@ if (isset($_GET['delete'])) {
                                                             </td>
                                                             <td class="text-center text-nowrap">
                                                                 <div class="d-inline-flex gap-2">
-                                                                    <a onclick="return confirm('Apakah kamu yakin akan mengedit data ini?')"
-                                                                        href="add-about.php?edit=<?php echo $row['id']; ?>"
+                                                                    <a data-toggle="modal"
+                                                                        data-target="#editpart<?= $row['id']; ?>"
+                                                                        href=" #editpart<?= $row['id']; ?>"
                                                                         class="btn btn-success btn-sm mr-2">Edit</a>
                                                                     <a onclick="return confirm('Apakah kamu yakin akan menghapus data ini?')"
-                                                                        href="about.php?delete=<?php echo $row['id']; ?>"
+                                                                        href="about.php?hapus=<?php echo $row['id']; ?>"
                                                                         class="btn btn-danger btn-sm">Hapus</a>
                                                                 </div>
                                                             </td>
@@ -525,6 +589,84 @@ if (isset($_GET['delete'])) {
             </div>
         </div>
     </div>
+
+    <!-- Update -->
+    <?php if (isset($rows)) {
+        foreach ($rows as $index => $row) { ?>
+            <div class="modal fade" id="editpart<?= $row['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Update data
+                                <?= $row['id'] ?>
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="" method="post" class="p-4" enctype="multipart/form-data">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                                    <input type="hidden" name="file_lama" value="<?= $row['file'] ?>">
+                                    <label for="">Nama</label>
+                                    <input type="text" class="form-control" name="nama" value="<?= $row['nama'] ?>"
+                                        placeholder="Masukkan nama anda..">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="">Email</label>
+                                    <input type="email" class="form-control" name="email" value="<?= $row['email'] ?>"
+                                        placeholder="Masukkan email anda..">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="">Telp</label>
+                                    <input type="tel" class="form-control" name="telp" value="<?= $row['telp'] ?>"
+                                        placeholder="Masukkan no telp anda..">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="">Tanggal Lahir</label>
+                                    <input type="date" class="form-control" name="tanggal_lahir" value="<?= $row['tanggal_lahir'] ?>"
+                                        placeholder="Masukkan tanggal lahir anda..">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="">Deskripsi</label>
+                                    <textarea type="text" class="form-control" name="deskripsi"
+                                        placeholder="Masukkan deskripsi anda.."><?= $row['deskripsi'] ?></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            <div class="mb-3">
+                                                <label for="">Alamat</label>
+                                                <textarea type="text" class="form-control" name="alamat"
+                                                    placeholder="Masukkan alamat anda.."><?= $row['telp'] ?></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="mb-3">
+                                                <label for="">Kode Pos</label>
+                                                <input type="number" class="form-control" name="kode_pos" value="<?= $row['kode_pos'] ?>"
+                                                    placeholder="Masukkan kode pos anda..">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="">File</label>
+                                    <input type="file" class="form-control" name="file" value="<?= $row['file'] ?>" placeholder="Masukkan file anda..">
+                                </div>
+                                <div class="modal-footer">
+                                    <button href="about.php" class="text-decoration" type="button" class="btn btn-secondary"
+                                        data-dismiss="modal">Close</button>
+                                    <button type="submit" name="submit" class="btn btn-primary">Save Changes</button>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <?php }
+    } ?>
 
     <!-- Bootstrap core JavaScript-->
     <?php include '_inc/js.php'; ?>
